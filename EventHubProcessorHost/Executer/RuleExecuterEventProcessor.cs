@@ -120,13 +120,22 @@ namespace ExecuterProgram
                 // Detect the emotions in the URL
                 //
                 Emotion[] emotionResult = await emotionServiceClient.RecognizeAsync(url);
+
+                float anger = 0;
+                float happiness = 0;
+                float neutral = 0;
+
+                //Only process if we get a result
+                if (emotionResult != null)
+                {
+                    foreach (Emotion emotion in emotionResult)
+                    {
+                        anger = emotion.Scores.Anger;
+                        happiness = emotion.Scores.Happiness;
+                        neutral = emotion.Scores.Neutral;
+                    }
+                }
                 //Console.WriteLine(emotionResult[0].Scores);
-
-                //var scores = emotionResult[0].Scores;
-
-                var anger = emotionResult[0].Scores.Anger;
-                var happiness = emotionResult[0].Scores.Happiness;
-                var neutral = emotionResult[0].Scores.Neutral;
 
                 var led = "happy";
 
@@ -139,7 +148,7 @@ namespace ExecuterProgram
                     led = "neutral";
                 }
 
-                Console.WriteLine(led);
+                //Console.WriteLine(led);
 
                 //blue neutral
                 //red anger

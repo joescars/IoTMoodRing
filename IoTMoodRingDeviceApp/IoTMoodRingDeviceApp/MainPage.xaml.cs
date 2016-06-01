@@ -41,6 +41,10 @@ namespace IoTMoodRingDeviceApp
             // Initialize LEDs
             InitializeLEDs();
 
+            //this.TurnLEDOn(GREEN_LED_PIN);
+            //this.TurnLEDOn(RED_LED_PIN);
+            //this.TurnLEDOn(BLUE_LED_PIN);
+
             TestLEDS();
 
             TurnLEDsOff();
