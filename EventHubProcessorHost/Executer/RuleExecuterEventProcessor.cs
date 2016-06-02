@@ -124,29 +124,57 @@ namespace ExecuterProgram
                 float anger = 0;
                 float happiness = 0;
                 float neutral = 0;
+                string emo = "";
 
                 //Only process if we get a result
                 if (emotionResult != null)
                 {
+                    float currentEmo = 0;
+                    float newEmo = 0;
+
                     foreach (Emotion emotion in emotionResult)
                     {
-                        anger = emotion.Scores.Anger;
-                        happiness = emotion.Scores.Happiness;
-                        neutral = emotion.Scores.Neutral;
+                        newEmo = emotion.Scores.Anger;
+                        if (newEmo > currentEmo)
+                            emo = "angry";currentEmo = newEmo;
+
+                        newEmo = emotion.Scores.Happiness;
+                        if (newEmo > currentEmo)
+                            emo = "happy"; currentEmo = newEmo;
+
+                        newEmo = emotion.Scores.Neutral;
+                        if (newEmo > currentEmo)
+                            emo = "neutral"; currentEmo = newEmo;
+
+                        newEmo = emotion.Scores.Fear;
+                        if (newEmo > currentEmo)
+                            emo = "fear"; currentEmo = newEmo;
+
+                        newEmo = emotion.Scores.Sadness;
+                        if (newEmo > currentEmo)
+                            emo = "sadness"; currentEmo = newEmo;
+
+                        newEmo = emotion.Scores.Surprise;
+                        if (newEmo > currentEmo)
+                            emo = "suprise"; currentEmo = newEmo;
+
+                        newEmo = emotion.Scores.Disgust;
+                        if (newEmo > currentEmo)
+                            emo = "disgust"; currentEmo = newEmo;
                     }
                 }
                 //Console.WriteLine(emotionResult[0].Scores);
 
-                var led = "happy";
+                //var led = "happy";
 
-                if (anger > happiness && anger > neutral)
-                {
-                    led = "angry";
-                }
-                else if (neutral > happiness && neutral > anger)
-                {
-                    led = "neutral";
-                }
+                //if (anger > happiness && anger > neutral)
+                //{
+                //    led = "angry";
+                //}
+                //else if (neutral > happiness && neutral > anger)
+                //{
+                //    led = "neutral";
+                //}
 
                 //Console.WriteLine(led);
 
@@ -154,7 +182,8 @@ namespace ExecuterProgram
                 //red anger
                 //green happy
 
-                return led;
+                //return led;
+                return emo;
             }
             catch (Exception exception)
             {
