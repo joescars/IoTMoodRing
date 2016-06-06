@@ -42,8 +42,6 @@ namespace ExecuterProgram
             return Task.FromResult<object>(null);
         }
 
-
-
         async Task IEventProcessor.ProcessEventsAsync(PartitionContext context, IEnumerable<EventData> messages)
         {
             foreach (EventData eventData in messages)
@@ -68,10 +66,7 @@ namespace ExecuterProgram
                     return;
                 }
 
-                // TODO: Work with the message
-                
-
-
+                // Process Message
 
                 if (!string.IsNullOrEmpty(json_message["Url"].ToString()))
                 {
@@ -89,18 +84,13 @@ namespace ExecuterProgram
                 }
 
 
-                //send pictureResult;
-                //send textResult;
-
             }
             // For the sake of the demo we are checkpointing with ever event batch
             await context.CheckpointAsync();
 
 
         }
-
-
-
+        
         static public async Task<string> MakeEmotionAnalyticsRequest(string message)
         {
             //Emotion[] X = await CheckEmotion("http://video.ch9.ms/ch9/9c85/8f5eb88e-ee76-4b1e-926b-7abc98b59c85/S01E04_512.jpg"); //happiness
@@ -121,9 +111,6 @@ namespace ExecuterProgram
                 //
                 Emotion[] emotionResult = await emotionServiceClient.RecognizeAsync(url);
 
-                float anger = 0;
-                float happiness = 0;
-                float neutral = 0;
                 string emo = "";
 
                 //Only process if we get a result
@@ -187,7 +174,8 @@ namespace ExecuterProgram
             }
             catch (Exception exception)
             {
-
+                Console.WriteLine("Error reported:");
+                Console.WriteLine(exception.Message);
                 return null;
             }
 
